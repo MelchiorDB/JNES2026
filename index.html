@@ -17,8 +17,7 @@
   .wrap{max-width:920px;margin:0 auto;padding:0 18px}
 
   /* hero */
-  header{background:linear-gradient(150deg,var(--canopy),#1d4636 60%,var(--leaf));
-         color:#fff;padding:38px 0 30px;text-align:center}
+  header{background:transparent;color:#fff;padding:64px 0 56px;text-align:center}
   .gh{width:120px;height:104px;margin:0 auto 14px;display:block}
   header h1{font-size:1.55rem;font-weight:800;letter-spacing:.2px;line-height:1.25;
             max-width:640px;margin:0 auto}
@@ -48,7 +47,7 @@
   .card.gold .go{color:var(--solardeep)} .card.slate .go{color:var(--slate)}
 
   /* footer */
-  footer{margin-top:30px;border-top:1px solid var(--line);padding:22px 0 34px;
+  footer{margin-top:30px;border-top:1px solid var(--line);padding:22px 0 34px;background:rgba(238,244,239,.85);
          font-size:.84rem;color:#5a665e;text-align:center}
   footer b{color:var(--canopy)}
   footer .aff{margin-top:6px;font-size:.78rem;opacity:.9}
@@ -75,9 +74,33 @@
   .logo-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px}
   .logo-row img{height:46px;width:auto;object-fit:contain}
   @media(max-width:680px){.site-grid{grid-template-columns:1fr}.logo-row img{height:34px}.logo-row{gap:20px}}
+
+  /* animated day-cycle background */
+  body{background:transparent}
+  #bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  #sky{position:absolute;inset:0;background:linear-gradient(180deg,#1a2648,#e9966a 78%);transition:background .3s linear}
+  #scene{position:absolute;inset:0;width:100%;height:100%}
+  .plant{transform-box:fill-box;transform-origin:bottom center;transform:scaleY(.15)}
+  .logo-row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 24px;
+            box-shadow:0 6px 20px rgba(21,53,42,.06);display:inline-flex;flex-wrap:wrap;gap:30px;max-width:100%}
 </style>
 </head>
 <body>
+<div id="bg"><div id="sky"></div>
+ <svg id="scene" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <circle id="sunGlow" cx="50" cy="60" r="13" fill="#ffe49b" opacity="0.3"/>
+  <circle id="sun" cx="50" cy="60" r="7.5" fill="#ffd24a"/>
+  <path d="M0,82 Q25,74 50,80 T100,80 L100,100 L0,100 Z" fill="#9fc3a0" opacity="0.45"/>
+  <path d="M0,88 Q30,82 60,87 T100,86 L100,100 L0,100 Z" fill="#6f9e72" opacity="0.6"/>
+  <rect x="0" y="92" width="100" height="8" fill="#5b7d50"/>
+  <polygon points="30,92 30,76 50,66 70,76 70,92" fill="rgba(220,240,235,.4)" stroke="#e8f3ee" stroke-width="0.7"/>
+  <polygon points="33,77.5 49,67.5 47,73 36,80" fill="#1b2742" stroke="#e9a23b" stroke-width="0.5"/>
+  <polyline points="30,92 30,76 50,66 70,76 70,92" fill="none" stroke="#dff0e8" stroke-width="1" stroke-linejoin="round"/>
+  <line x1="29" y1="92" x2="71" y2="92" stroke="#dff0e8" stroke-width="1"/>
+  <g class="plant p1"><path d="M40,92 L40,80" stroke="#3f7a43" stroke-width="1" fill="none"/><ellipse cx="37" cy="84" rx="2.4" ry="1.2" fill="#5fb15f" transform="rotate(-28 37 84)"/><ellipse cx="43" cy="81" rx="2.4" ry="1.2" fill="#5fb15f" transform="rotate(28 43 81)"/></g>
+  <g class="plant p2"><path d="M50,92 L50,78" stroke="#3f7a43" stroke-width="1" fill="none"/><ellipse cx="47" cy="83" rx="2.6" ry="1.3" fill="#6cc06c" transform="rotate(-26 47 83)"/><ellipse cx="53" cy="80" rx="2.6" ry="1.3" fill="#6cc06c" transform="rotate(26 53 80)"/></g>
+  <g class="plant p3"><path d="M60,92 L60,81" stroke="#3f7a43" stroke-width="1" fill="none"/><ellipse cx="57" cy="85" rx="2.3" ry="1.1" fill="#5fb15f" transform="rotate(-28 57 85)"/><ellipse cx="63" cy="82.5" rx="2.3" ry="1.1" fill="#5fb15f" transform="rotate(28 63 82.5)"/></g>
+ </svg></div>
 
 <header>
   <div class="wrap">
@@ -230,6 +253,15 @@
   .logo-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px}
   .logo-row img{height:46px;width:auto;object-fit:contain}
   @media(max-width:680px){.site-grid{grid-template-columns:1fr}.logo-row img{height:34px}.logo-row{gap:20px}}
+
+  /* animated day-cycle background */
+  body{background:transparent}
+  #bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  #sky{position:absolute;inset:0;background:linear-gradient(180deg,#1a2648,#e9966a 78%);transition:background .3s linear}
+  #scene{position:absolute;inset:0;width:100%;height:100%}
+  .plant{transform-box:fill-box;transform-origin:bottom center;transform:scaleY(.15)}
+  .logo-row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 24px;
+            box-shadow:0 6px 20px rgba(21,53,42,.06);display:inline-flex;flex-wrap:wrap;gap:30px;max-width:100%}
 </style>
 <div id="ght" aria-hidden="true"><svg viewBox="0 0 120 120">
  <circle cx="92" cy="28" r="8.5" fill="#e9a23b"/>
@@ -256,5 +288,19 @@
 })();
 </script>
 
+<script>
+(function(){var sky=document.getElementById('sky'),sun=document.getElementById('sun'),glow=document.getElementById('sunGlow'),plants=document.querySelectorAll('#scene .plant');
+ var SK=[[[26,38,72],[233,150,70]],[[74,150,222],[201,230,246]],[[40,22,58],[226,96,58]]];
+ function L(a,b,t){return a.map(function(v,i){return Math.round(v+(b[i]-v)*t);});}function R(a){return 'rgb('+a[0]+','+a[1]+','+a[2]+')';}
+ function setP(p){p=Math.max(0,Math.min(1,p));var top,bot,t;
+  if(p<0.5){t=p/0.5;top=L(SK[0][0],SK[1][0],t);bot=L(SK[0][1],SK[1][1],t);}else{t=(p-0.5)/0.5;top=L(SK[1][0],SK[2][0],t);bot=L(SK[1][1],SK[2][1],t);}
+  sky.style.background='linear-gradient(180deg,'+R(top)+' 0%,'+R(bot)+' 78%,'+R(bot)+' 100%)';
+  var arc=Math.sin(p*Math.PI),x=8+84*p,y=84-66*arc;sun.setAttribute('cx',x);sun.setAttribute('cy',y);glow.setAttribute('cx',x);glow.setAttribute('cy',y);
+  var sc=L([255,243,180],[255,150,60],1-arc);sun.setAttribute('fill',R(sc));glow.setAttribute('fill',R(sc));glow.setAttribute('opacity',(0.15+0.22*arc).toFixed(2));
+  var g=0.15+0.85*p;plants.forEach(function(pl,i){pl.style.transform='scaleY('+Math.min(1,g*(0.9+0.06*i))+')';});}
+ function onScroll(){var m=document.documentElement.scrollHeight-window.innerHeight;setP(m>0?window.scrollY/m:0);}
+ window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);onScroll();
+})();
+</script>
 </body>
 </html>
