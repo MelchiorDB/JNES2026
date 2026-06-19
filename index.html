@@ -58,6 +58,23 @@
     header h1{font-size:1.3rem}
     .card{min-height:auto}
   }
+
+  /* two sites + logos */
+  .sec-title{text-align:center;color:var(--canopy);font-size:1.32rem;margin:40px 0 4px}
+  .sec-sub{text-align:center;color:#5a665e;font-size:.92rem;margin-bottom:18px}
+  .site-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .site{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+        box-shadow:0 6px 20px rgba(21,53,42,.07)}
+  .site svg{width:100%;height:150px;display:block}
+  .site .txt{padding:16px 18px}
+  .site h3{color:var(--canopy);font-size:1.1rem;display:flex;align-items:center;gap:8px}
+  .site .flag{font-size:1.15rem}
+  .site p{font-size:.9rem;color:#42514a;margin-top:6px;line-height:1.55}
+  .logos{margin-top:38px;text-align:center}
+  .logos-lab{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#94a399;margin-bottom:16px}
+  .logo-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px}
+  .logo-row img{height:46px;width:auto;object-fit:contain}
+  @media(max-width:680px){.site-grid{grid-template-columns:1fr}.logo-row img{height:34px}.logo-row{gap:20px}}
 </style>
 </head>
 <body>
@@ -117,6 +134,58 @@
     </a>
 
   </div>
+
+  <section>
+    <h2 class="sec-title">Two prototype greenhouses, two climates</h2>
+    <p class="sec-sub">The PhD runs between USMB (Savoie, FR) and the University of Genova (Imperia, IT).</p>
+    <div class="site-grid">
+      <div class="site">
+        <svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+   <defs><linearGradient id="skA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#aed1ee"/><stop offset="1" stop-color="#e9f3fb"/></linearGradient></defs>
+   <rect width="200" height="150" fill="url(#skA)"/>
+   <circle cx="40" cy="32" r="13" fill="#fdfbe6" opacity="0.92"/>
+   <polygon points="-15,118 42,46 100,118" fill="#9bb0c6"/>
+   <polygon points="55,118 118,30 188,118" fill="#7d96ae"/>
+   <polygon points="135,118 178,52 220,118" fill="#94abc1"/>
+   <polygon points="42,46 31,62 53,62" fill="#ffffff"/>
+   <polygon points="118,30 104,52 132,52" fill="#ffffff"/>
+   <rect x="0" y="116" width="200" height="34" fill="#cadfc7"/>
+   <g transform="translate(78,98)"><polygon points="0,18 0,7 12,-2 24,7 24,18" fill="rgba(255,255,255,.55)" stroke="#4f7d54" stroke-width="1.4" stroke-linejoin="round"/><polygon points="3,4 12,-1 10,5 4,9" fill="#1b2742"/></g>
+</svg>
+        <div class="txt"><h3><span class="flag">&#127956;</span> Savoie, France</h3>
+          <p>USMB site, at the foot of the <b>Alps</b>: an alpine, continental climate. Cooler, with a strong seasonal contrast and a heating-dominated winter; moderate irradiation.</p></div>
+      </div>
+      <div class="site">
+        <svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+   <defs><linearGradient id="skS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbe1ad"/><stop offset="1" stop-color="#cfe7f1"/></linearGradient>
+   <linearGradient id="seaS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f97cd"/><stop offset="1" stop-color="#1d6aa0"/></linearGradient></defs>
+   <rect width="200" height="150" fill="url(#skS)"/>
+   <circle cx="152" cy="38" r="14" fill="#ffce53"/>
+   <rect y="84" width="200" height="66" fill="url(#seaS)"/>
+   <line x1="152" y1="84" x2="152" y2="140" stroke="#ffe9a8" stroke-width="4" opacity="0.45"/>
+   <g stroke="#d3edfb" stroke-width="1.6" stroke-linecap="round" opacity="0.65">
+     <line x1="18" y1="100" x2="42" y2="100"/><line x1="64" y1="112" x2="92" y2="112"/>
+     <line x1="112" y1="104" x2="138" y2="104"/><line x1="150" y1="124" x2="180" y2="124"/></g>
+   <rect x="0" y="80" width="200" height="6" fill="#dcc188"/>
+   <g transform="translate(26,66)"><polygon points="0,18 0,7 12,-2 24,7 24,18" fill="rgba(255,255,255,.6)" stroke="#4f7d54" stroke-width="1.4" stroke-linejoin="round"/><polygon points="3,4 12,-1 10,5 4,9" fill="#1b2742"/></g>
+</svg>
+        <div class="txt"><h3><span class="flag">&#127958;</span> Imperia, Italy</h3>
+          <p>University of Genova site, on the Ligurian <b>coast</b>: a Mediterranean, maritime climate. Warmer and sunnier, with high summer irradiation and strong water-use pressure.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="logos">
+    <p class="logos-lab">Partners &amp; funding</p>
+    <div class="logo-row">
+      <img src="img/logos/logo_usmb.png" alt="Universite Savoie Mont Blanc">
+      <img src="img/logos/logo_locie.png" alt="LOCIE">
+      <img src="img/logos/logo_interreg.png" alt="Interreg ALCOTRA">
+      <img src="img/logos/logo_ermess.jpg" alt="ERMESS Green">
+      <img src="img/logos/logo_dime.jpg" alt="DIME">
+      <img src="img/logos/logo_unige.png" alt="University of Genova">
+    </div>
+  </section>
 </main>
 
 <footer class="wrap">
@@ -144,6 +213,23 @@
 @keyframes ghtgrow{to{stroke-dashoffset:0}}
 @keyframes ghtleaf{to{transform:scale(1)}}
 @keyframes ghtspin{to{transform:rotate(360deg)}}
+
+  /* two sites + logos */
+  .sec-title{text-align:center;color:var(--canopy);font-size:1.32rem;margin:40px 0 4px}
+  .sec-sub{text-align:center;color:#5a665e;font-size:.92rem;margin-bottom:18px}
+  .site-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .site{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+        box-shadow:0 6px 20px rgba(21,53,42,.07)}
+  .site svg{width:100%;height:150px;display:block}
+  .site .txt{padding:16px 18px}
+  .site h3{color:var(--canopy);font-size:1.1rem;display:flex;align-items:center;gap:8px}
+  .site .flag{font-size:1.15rem}
+  .site p{font-size:.9rem;color:#42514a;margin-top:6px;line-height:1.55}
+  .logos{margin-top:38px;text-align:center}
+  .logos-lab{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#94a399;margin-bottom:16px}
+  .logo-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px}
+  .logo-row img{height:46px;width:auto;object-fit:contain}
+  @media(max-width:680px){.site-grid{grid-template-columns:1fr}.logo-row img{height:34px}.logo-row{gap:20px}}
 </style>
 <div id="ght" aria-hidden="true"><svg viewBox="0 0 120 120">
  <circle cx="92" cy="28" r="8.5" fill="#e9a23b"/>
