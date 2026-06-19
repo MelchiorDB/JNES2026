@@ -84,7 +84,7 @@
   #scene{position:absolute;inset:0;width:100%;height:100%}
   #sun{position:absolute;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 44px 15px rgba(255,221,130,.4);pointer-events:none}
   .plant{transform-box:fill-box;transform-origin:bottom center;transform:scaleY(.15)}
-  .logo-row{background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.55);border-radius:16px;padding:18px 24px;
+  .logo-row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 24px;
             box-shadow:0 6px 20px rgba(21,53,42,.06);display:inline-flex;flex-wrap:wrap;gap:30px;max-width:100%}
 </style>
 </head>
@@ -93,28 +93,29 @@
  <svg id="scene" viewBox="0 0 100 100" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <defs><linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aa6d6"/><stop offset="1" stop-color="#286f9e"/></linearGradient></defs>
   <g id="land">
-   <rect x="80" y="84" width="86" height="20" fill="url(#seaG)"/>
-   <g stroke="#d6effb" stroke-width="0.7" stroke-linecap="round" opacity="0.6"><line x1="94" y1="90" x2="103" y2="90"/><line x1="114" y1="93" x2="125" y2="93"/><line x1="103" y1="96" x2="115" y2="96"/></g>
-   <path d="M-56,100 L-56,82 Q16,75 84,86 L84,100 Z" fill="#7ba87c"/>
-   <path d="M-56,100 L-56,90 Q16,86 84,90 L86,100 Z" fill="#5b7d50"/>
-   <polygon points="-58,88 -32,46 -6,88" fill="#9db2c8"/>
-   <polygon points="-34,88 -9,38 16,88" fill="#83a0b9"/>
-   <polygon points="-6,88 11,56 28,88" fill="#94abc1"/>
-   <polygon points="-32,46 -37,54 -27,54" fill="#ffffff"/>
-   <polygon points="-9,38 -15,47 -3,47" fill="#ffffff"/>
-   <polygon points="11,56 7,62 15,62" fill="#ffffff"/>
-   <path d="M78,84 Q84,86 87,92 L82,92 Q78,87 75,84 Z" fill="#e6cd93"/>
+   <rect x="68" y="89" width="104" height="15" fill="url(#seaG)"/>
+   <g stroke="#d6effb" stroke-width="0.6" stroke-linecap="round" opacity="0.5"><line x1="86" y1="93.5" x2="95" y2="93.5"/><line x1="110" y1="97" x2="121" y2="97"/></g>
+   <g transform="translate(100,87.4)"><path d="M-3.4,1.8 L3.4,1.8 L2.3,3.9 L-2.3,3.9 Z" fill="#c64a40"/><line x1="0" y1="1.8" x2="0" y2="-4.4" stroke="#f6f6f6" stroke-width="0.4"/><path d="M0.3,-4.1 L0.3,1.2 L3.1,1.2 Z" fill="#f6f6f6"/></g>
+   <polygon points="-58,92 -32,48 -6,92" fill="#9db2c8"/>
+   <polygon points="-34,92 -9,40 16,92" fill="#83a0b9"/>
+   <polygon points="-6,92 11,57 28,92" fill="#94abc1"/>
+   <polygon points="-32,48 -36.5,55 -27.5,55" fill="#ffffff"/>
+   <polygon points="-9,40 -14.5,48 -3.5,48" fill="#ffffff"/>
+   <polygon points="11,57 7.5,62.5 14.5,62.5" fill="#ffffff"/>
+   <path d="M-58,104 L-58,83 Q6,77 70,90 L70,104 Z" fill="#7ba87c"/>
+   <path d="M-58,104 L-58,92 Q6,88 67,93 L67,104 Z" fill="#5b7d50"/>
+   <path d="M58,104 Q66,90.5 74,90.5 Q80,90.7 85,92.4 L85,104 Z" fill="#e6cd93"/>
+   <g transform="translate(68.5,91)" stroke-linecap="round"><line x1="0" y1="0" x2="2.6" y2="-2.5" stroke="#e0654f" stroke-width="0.7"/><line x1="-0.3" y1="0.15" x2="2.1" y2="0.15" stroke="#e0654f" stroke-width="0.7"/><line x1="0.1" y1="0.15" x2="0.6" y2="1.2" stroke="#9a4030" stroke-width="0.4"/><line x1="2" y1="0.15" x2="2.5" y2="1.2" stroke="#9a4030" stroke-width="0.4"/></g>
    <g transform="translate(38,73)">
     <polygon points="0,18 0,9 12,2 24,9 24,18" fill="rgba(222,240,235,.42)" stroke="#eaf4ef" stroke-width="0.7"/>
-    <polygon points="2.5,8 11,2.5 9.5,7 4,11.5" fill="#1b2742" stroke="#e9a23b" stroke-width="0.4"/>
+    <polygon points="2.2,7.7 9.4,3.5 10.7,5.7 3.5,9.9" fill="#16233f" stroke="#e9a23b" stroke-width="0.45" stroke-linejoin="round"/>
+    <g stroke="#46577d" stroke-width="0.22"><line x1="4.6" y1="6.45" x2="5.7" y2="8.35"/><line x1="7" y1="5.05" x2="8.1" y2="6.95"/></g>
     <polyline points="0,18 0,9 12,2 24,9 24,18" fill="none" stroke="#e3f1ea" stroke-width="0.9" stroke-linejoin="round"/>
     <line x1="-1" y1="18" x2="25" y2="18" stroke="#e3f1ea" stroke-width="0.9"/>
-    <g class="plant p1"><path d="M7,18 L7,12" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="5.2" cy="14" rx="1.5" ry="0.8" fill="#5fb15f" transform="rotate(-28 5.2 14)"/><ellipse cx="8.8" cy="12.6" rx="1.5" ry="0.8" fill="#5fb15f" transform="rotate(28 8.8 12.6)"/></g>
-    <g class="plant p2"><path d="M12,18 L12,10.5" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="10" cy="13" rx="1.6" ry="0.9" fill="#6cc06c" transform="rotate(-26 10 13)"/><ellipse cx="14" cy="11.5" rx="1.6" ry="0.9" fill="#6cc06c" transform="rotate(26 14 11.5)"/></g>
-    <g class="plant p3"><path d="M17,18 L17,12.5" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="15.2" cy="14.5" rx="1.4" ry="0.7" fill="#5fb15f" transform="rotate(-28 15.2 14.5)"/><ellipse cx="18.8" cy="13" rx="1.4" ry="0.7" fill="#5fb15f" transform="rotate(28 18.8 13)"/></g>
+    <g class="plant p1"><path d="M7,18 L7,12" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="5.2" cy="14" rx="1.5" ry="0.8" fill="#5fb15f" transform="rotate(-28 5.2 14)"/><ellipse cx="8.8" cy="12.6" rx="1.5" ry="0.8" fill="#5fb15f" transform="rotate(28 8.8 12.6)"/></g><g class="plant p2"><path d="M12,18 L12,10.5" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="10" cy="13" rx="1.6" ry="0.9" fill="#6cc06c" transform="rotate(-26 10 13)"/><ellipse cx="14" cy="11.5" rx="1.6" ry="0.9" fill="#6cc06c" transform="rotate(26 14 11.5)"/></g><g class="plant p3"><path d="M17,18 L17,12.5" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="15.2" cy="14.5" rx="1.4" ry="0.7" fill="#5fb15f" transform="rotate(-28 15.2 14.5)"/><ellipse cx="18.8" cy="13" rx="1.4" ry="0.7" fill="#5fb15f" transform="rotate(28 18.8 13)"/></g>
    </g>
   </g>
- </svg></div>
+</svg></div>
 
 <header>
   <div class="wrap">
@@ -170,6 +171,13 @@
       <span class="go">Connect &rarr;</span>
     </a>
 
+    <a class="card" href="pao3d.html">
+      <div class="ic green">&#127793;</div>
+      <h2>3D plant</h2>
+      <p>Rotate the Pao cucumber FSPM and tap to water it: watch the crop grow, stage by stage.</p>
+      <span class="go">Grow it &rarr;</span>
+    </a>
+
   </div>
 
   <section>
@@ -218,8 +226,8 @@
       <a href="https://www.univ-smb.fr/" target="_blank" rel="noopener"><img src="img/logos/logo_usmb.png" alt="Universite Savoie Mont Blanc"></a>
       <a href="https://www.univ-smb.fr/locie/" target="_blank" rel="noopener"><img src="img/logos/logo_locie.png" alt="LOCIE"></a>
       <a href="https://www.interreg-alcotra.eu/" target="_blank" rel="noopener"><img src="img/logos/logo_interreg.png" alt="Interreg ALCOTRA"></a>
-      <a href="https://interreg-alcotra.eu/fr/ermess-green-energie-renouvelable-modeles-defficacite-et-de-durabilite-dans-les-serres-smart" target="_blank" rel="noopener"><img src="img/logos/logo_ermess.jpg" alt="ERMESS Green"></a>
-      <a href="https://dime.unige.it/" target="_blank" rel="noopener"><img src="img/logos/logo_dime.jpg" alt="DIME"></a>
+      <a href="https://interreg-alcotra.eu/fr/ermess-green-energie-renouvelable-modeles-defficacite-et-de-durabilite-dans-les-serres-smart" target="_blank" rel="noopener"><img src="img/logos/logo_ermess.png" alt="ERMESS Green"></a>
+      <a href="https://dime.unige.it/" target="_blank" rel="noopener"><img src="img/logos/logo_dime.png" alt="DIME"></a>
       <a href="https://unige.it/" target="_blank" rel="noopener"><img src="img/logos/logo_unige.png" alt="University of Genova"></a>
     </div>
   </section>
@@ -277,7 +285,7 @@
   #scene{position:absolute;inset:0;width:100%;height:100%}
   #sun{position:absolute;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 44px 15px rgba(255,221,130,.4);pointer-events:none}
   .plant{transform-box:fill-box;transform-origin:bottom center;transform:scaleY(.15)}
-  .logo-row{background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.55);border-radius:16px;padding:18px 24px;
+  .logo-row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 24px;
             box-shadow:0 6px 20px rgba(21,53,42,.06);display:inline-flex;flex-wrap:wrap;gap:30px;max-width:100%}
 </style>
 <div id="ght" aria-hidden="true"><svg viewBox="0 0 120 120">
