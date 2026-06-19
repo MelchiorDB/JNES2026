@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenhouse simulation under photovoltaic shading</title>
+<meta name="description" content="PhD project: a per-leaf, layout-aware simulation of greenhouse crops under photovoltaic shading. ERMESS Green, USMB (LOCIE/SYMME) and University of Genova (DIME).">
+<style>
+  :root{
+    --canopy:#15352a; --leaf:#2d6a4f; --solar:#e9a23b; --solardeep:#c87f18;
+    --slate:#46627a; --bg:#eef4ef; --card:#ffffff; --ink:#1b2620; --line:#d9e2dc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+       background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px}
+
+  /* hero */
+  header{background:linear-gradient(150deg,var(--canopy),#1d4636 60%,var(--leaf));
+         color:#fff;padding:38px 0 30px;text-align:center}
+  .gh{width:120px;height:104px;margin:0 auto 14px;display:block}
+  header h1{font-size:1.55rem;font-weight:800;letter-spacing:.2px;line-height:1.25;
+            max-width:640px;margin:0 auto}
+  header h1 em{color:var(--solar);font-style:italic}
+  header p.sub{margin-top:10px;font-size:.98rem;opacity:.92;max-width:560px;margin-left:auto;margin-right:auto}
+  .pill{display:inline-block;margin-top:14px;font-size:.78rem;letter-spacing:.06em;
+        text-transform:uppercase;background:rgba(255,255,255,.14);
+        padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25)}
+
+  /* cards */
+  main{padding:26px 0 10px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+        padding:22px 20px;display:flex;flex-direction:column;min-height:200px;
+        transition:transform .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(21,53,42,.14)}
+  .ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;
+      justify-content:center;font-size:1.5rem;margin-bottom:14px}
+  .ic.green{background:#e7f1ea;color:var(--leaf)}
+  .ic.gold{background:#fdf2dd;color:var(--solardeep)}
+  .ic.slate{background:#e9eef3;color:var(--slate)}
+  .card h2{font-size:1.12rem;color:var(--canopy);margin-bottom:6px}
+  .card p{font-size:.92rem;color:#42514a;flex:1}
+  .go{margin-top:14px;font-weight:700;font-size:.9rem;color:var(--leaf);display:inline-flex;align-items:center;gap:6px}
+  .card.gold .go{color:var(--solardeep)} .card.slate .go{color:var(--slate)}
+
+  /* footer */
+  footer{margin-top:30px;border-top:1px solid var(--line);padding:22px 0 34px;
+         font-size:.84rem;color:#5a665e;text-align:center}
+  footer b{color:var(--canopy)}
+  footer .aff{margin-top:6px;font-size:.78rem;opacity:.9}
+
+  @media(max-width:680px){
+    .grid{grid-template-columns:1fr}
+    header h1{font-size:1.3rem}
+    .card{min-height:auto}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <!-- greenhouse + PV + sun motif -->
+    <svg class="gh" viewBox="0 0 120 104" aria-hidden="true">
+      <circle cx="16" cy="16" r="7" fill="#e9a23b"/>
+      <g stroke="#e9a23b" stroke-width="2" stroke-linecap="round">
+        <line x1="16" y1="3" x2="16" y2="7"/><line x1="16" y1="25" x2="16" y2="29"/>
+        <line x1="3" y1="16" x2="7" y2="16"/><line x1="25" y1="16" x2="29" y2="16"/>
+        <line x1="7" y1="7" x2="10" y2="10"/><line x1="22" y1="22" x2="25" y2="25"/>
+      </g>
+      <polygon points="24,60 24,42 60,18 96,42 96,60" fill="rgba(255,255,255,.16)" stroke="#cfe0d6" stroke-width="2"/>
+      <polygon points="30,40 48,28 44,38 26,50" fill="#1b2330" stroke="#e9a23b" stroke-width="1.4"/>
+      <g stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <polyline points="24,60 24,42 60,18 96,42 96,60"/>
+      </g>
+      <line x1="20" y1="60" x2="100" y2="60" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <h1>Simulating the greenhouse growing environment under <em>photovoltaic shading</em></h1>
+    <p class="sub">A per-leaf, layout-aware model coupling Monte Carlo light, plant biophysics and a greenhouse energy and water balance.</p>
+    <span class="pill">ERMESS Green &middot; JNES 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+
+    <a class="card gold" href="https://interreg-alcotra.eu/fr/ermess-green-energie-renouvelable-modeles-defficacite-et-de-durabilite-dans-les-serres-smart" target="_blank" rel="noopener">
+      <div class="ic gold">&#9728;</div>
+      <h2>ERMESS Green</h2>
+      <p>The Interreg VI-A France&ndash;Italia ALCOTRA project funding this work: smarter, more sustainable photovoltaic greenhouses.</p>
+      <span class="go">Visit the project &rarr;</span>
+    </a>
+
+    <a class="card" href="poster.html">
+      <div class="ic green">&#9783;</div>
+      <h2>Digital poster</h2>
+      <p>The JNES 2026 poster, with extra explanations: the model, the four PV layouts, and the cross-climate results.</p>
+      <span class="go">Read the poster &rarr;</span>
+    </a>
+
+    <a class="card slate" href="references.html">
+      <div class="ic slate">&#128214;</div>
+      <h2>References</h2>
+      <p>The papers behind the model: Pao 2021 (cucumber FSPM), Cossu 2014, Sarlikioti 2011, Reindl 1990 and more.</p>
+      <span class="go">See the bibliography &rarr;</span>
+    </a>
+
+  </div>
+</main>
+
+<footer class="wrap">
+  <b>Melchior Duchaufour</b> &nbsp;&middot;&nbsp; Christophe M&eacute;n&eacute;zo, Laurent Tabourot, Marco Fossa, Samuele Memme
+  <div class="aff">Universit&eacute; Savoie Mont Blanc (LOCIE, SYMME), France &nbsp;&bull;&nbsp; University of Genova (DIME), Italy</div>
+</footer>
+
+</body>
+</html>

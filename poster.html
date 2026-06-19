@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital poster &middot; Greenhouse under photovoltaic shading</title>
+<style>
+  :root{--canopy:#15352a;--leaf:#2d6a4f;--solar:#e9a23b;--solardeep:#c87f18;--slate:#46627a;--bg:#eef4ef;--card:#fff;--ink:#1b2620;--line:#d9e2dc}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+  a{color:var(--leaf)} .wrap{max-width:820px;margin:0 auto;padding:0 18px}
+  header{background:linear-gradient(150deg,var(--canopy),#1d4636 60%,var(--leaf));color:#fff;padding:30px 0 26px}
+  header .nav{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  header .nav a{color:#fff;opacity:.92;font-size:.9rem;border:1px solid rgba(255,255,255,.35);padding:6px 13px;border-radius:999px;text-decoration:none}
+  header h1{font-size:1.5rem;font-weight:800;line-height:1.25} header h1 em{color:var(--solar)}
+  header p{margin-top:8px;opacity:.92;font-size:.96rem}
+  section{padding:26px 0 6px}
+  h2{color:var(--canopy);font-size:1.22rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  h2 .tag{background:#e7f1ea;color:var(--leaf);font-size:.7rem;font-weight:800;letter-spacing:.05em;
+          text-transform:uppercase;padding:4px 9px;border-radius:6px}
+  p.body{color:#3c4a42;margin-bottom:12px}
+  figure{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0}
+  figure img{width:100%;height:auto;border-radius:6px;display:block}
+  figcaption{font-size:.86rem;color:#5a665e;margin-top:9px}
+  .key{background:#fff;border-left:5px solid var(--solar);border-radius:10px;padding:12px 16px;margin:12px 0;
+       font-weight:600;color:var(--canopy)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  footer{border-top:1px solid var(--line);padding:22px 0 36px;text-align:center;color:#5a665e;font-size:.84rem;margin-top:24px}
+  @media(max-width:680px){.two{grid-template-columns:1fr} header h1{font-size:1.25rem}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="nav">
+    <a href="index.html">&larr; Home</a>
+    <a href="references.html">References &rarr;</a>
+  </div>
+  <h1>Simulating the greenhouse growing environment under <em>photovoltaic shading</em></h1>
+  <p>A per-leaf, layout-aware model coupling Monte Carlo light, plant biophysics and a greenhouse energy and water balance. JNES 2026 poster, with added explanations.</p>
+</div></header>
+
+<main class="wrap">
+
+  <section>
+    <h2><span class="tag">Why</span> The problem</h2>
+    <p class="body">Crop growth in a greenhouse is tied to the PAR reaching the canopy. A simple 1D Beer-Lambert model predicts canopy-level productivity well in a conventional greenhouse (Pao 2021). But roof-mounted photovoltaic panels make the light <b>strongly heterogeneous</b>: measurements report a 4.5x difference between under-panel and far rows at 50% coverage. A 1D average can no longer capture the per-leaf response, so we built a per-leaf, layout-aware model.</p>
+  </section>
+
+  <section>
+    <h2><span class="tag">Model</span> How it works</h2>
+    <p class="body">The light reaching every single leaf is resolved by two <b>backward Monte Carlo</b> passes: one samples the sky hemisphere (diffuse), the other casts rays toward the sun (direct), including multiple scattering between leaves. It is validated against ArchimedLight within 2%.</p>
+    <figure><img src="img/montecarlo.png" alt="Backward Monte Carlo principle">
+      <figcaption>Backward Monte Carlo: each leaf casts its own rays. A ray reaching the sky scores light; one blocked by a leaf or a panel is shadowed.</figcaption></figure>
+    <p class="body">These per-leaf fluxes drive a coupled balance, exchanged every 15 min: a greenhouse <b>energy and water ODE</b> (air, cover, floor, walls, soil), and <b>PlantBiophysics</b> which solves, for each leaf, the energy balance (Monteith), photosynthesis (Farquhar) and stomatal conductance (Medlyn).</p>
+  </section>
+
+  <section>
+    <h2><span class="tag">Setup</span> Four PV layouts</h2>
+    <p class="body">The same cucumber canopy is run under four roof layouts at equal 25% coverage: no PV, five strips, a single continuous band, and a checkerboard.</p>
+    <figure><img src="img/layouts.png" alt="Four PV roof layouts">
+      <figcaption>The four PV roof layouts compared over the same 40-plant cucumber canopy.</figcaption></figure>
+  </section>
+
+  <section>
+    <h2><span class="tag">Result 1</span> Light is heterogeneous within one plant</h2>
+    <figure><img src="img/perleaf.png" alt="Per-leaf light on one plant">
+      <figcaption>One plant under the PV band. Left: leaves colored by daily absorbed light; the DLI spans ~2.5x within one plant, driven by leaf orientation, not height. Right: its instantaneous PAR under the four layouts. The band keeps it shaded all day; strips and checkerboard sweep it in and out as the sun moves.</figcaption></figure>
+  </section>
+
+  <section>
+    <h2><span class="tag">Result 2</span> The layout sets the cost</h2>
+    <figure><img src="img/matrix.png" alt="Yield and water cost by layout and climate">
+      <figcaption>Seasonal change in net assimilation and transpiration versus no PV (opaque panels, three climates). At the same 25% roof coverage the checkerboard loses the least and the continuous band the most.</figcaption></figure>
+    <div class="key">At equal coverage, the checkerboard is the best layout and the continuous band the worst: spreading the shade in two dimensions keeps the light most uniform across plants, so no plant is starved while others sit light-saturated. This matches the photovoltaic-greenhouse literature (Cossu et al.).</div>
+  </section>
+
+  <section>
+    <h2><span class="tag">Result 3</span> The crop stays thermally safe</h2>
+    <figure><img src="img/temperature.png" alt="Assimilation vs leaf temperature">
+      <figcaption>Cucumber net assimilation vs leaf temperature (intrinsic leaf response, well watered). Optimum near 30&deg;C; productivity falls only above 38-42&deg;C. The shaded band shows our actual leaf temperatures in the warmest case (Almeria, no PV): 22-34&deg;C, kept cool by transpiration, well below the danger zone.</figcaption></figure>
+  </section>
+
+  <section>
+    <h2><span class="tag">Take-away</span> In short</h2>
+    <p class="body">A generic, validated platform couples Monte Carlo light, an FSPM and PV shading. It resolves the spatial heterogeneity a 1D model averages out, and shows that <b>how</b> the panels are arranged matters as much as how much roof they cover.</p>
+  </section>
+
+</main>
+
+<footer>
+  <b>Melchior Duchaufour</b> &middot; Christophe M&eacute;n&eacute;zo, Laurent Tabourot, Marco Fossa, Samuele Memme<br>
+  Universit&eacute; Savoie Mont Blanc (LOCIE, SYMME), France &bull; University of Genova (DIME), Italy
+</footer>
+</body>
+</html>
