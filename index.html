@@ -82,17 +82,16 @@
   #bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
   #sky{position:absolute;inset:0;background:linear-gradient(180deg,#1a2648,#e9966a 78%);transition:background .3s linear}
   #scene{position:absolute;inset:0;width:100%;height:100%}
+  #sun{position:absolute;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 44px 15px rgba(255,221,130,.4);pointer-events:none}
   .plant{transform-box:fill-box;transform-origin:bottom center;transform:scaleY(.15)}
   .logo-row{background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.55);border-radius:16px;padding:18px 24px;
             box-shadow:0 6px 20px rgba(21,53,42,.06);display:inline-flex;flex-wrap:wrap;gap:30px;max-width:100%}
 </style>
 </head>
 <body>
-<div id="bg"><div id="sky"></div>
- <svg id="scene" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<div id="bg"><div id="sky"></div><div id="sun"></div>
+ <svg id="scene" viewBox="0 0 100 100" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
   <defs><linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aa6d6"/><stop offset="1" stop-color="#286f9e"/></linearGradient></defs>
-  <circle id="sunGlow" cx="50" cy="60" r="13" fill="#ffe49b" opacity="0.3"/>
-  <circle id="sun" cx="50" cy="60" r="7.5" fill="#ffd24a"/>
   <g id="land">
    <rect x="80" y="84" width="86" height="20" fill="url(#seaG)"/>
    <g stroke="#d6effb" stroke-width="0.7" stroke-linecap="round" opacity="0.6"><line x1="94" y1="90" x2="103" y2="90"/><line x1="114" y1="93" x2="125" y2="93"/><line x1="103" y1="96" x2="115" y2="96"/></g>
@@ -276,6 +275,7 @@
   #bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
   #sky{position:absolute;inset:0;background:linear-gradient(180deg,#1a2648,#e9966a 78%);transition:background .3s linear}
   #scene{position:absolute;inset:0;width:100%;height:100%}
+  #sun{position:absolute;width:58px;height:58px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 44px 15px rgba(255,221,130,.4);pointer-events:none}
   .plant{transform-box:fill-box;transform-origin:bottom center;transform:scaleY(.15)}
   .logo-row{background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.55);border-radius:16px;padding:18px 24px;
             box-shadow:0 6px 20px rgba(21,53,42,.06);display:inline-flex;flex-wrap:wrap;gap:30px;max-width:100%}
@@ -306,14 +306,14 @@
 </script>
 
 <script>
-(function(){var sky=document.getElementById('sky'),sun=document.getElementById('sun'),glow=document.getElementById('sunGlow'),land=document.getElementById('land'),plants=document.querySelectorAll('#scene .plant');
+(function(){var sky=document.getElementById('sky'),sun=document.getElementById('sun'),land=document.getElementById('land'),plants=document.querySelectorAll('#scene .plant');
  var SK=[[[26,38,72],[233,150,70]],[[74,150,222],[201,230,246]],[[40,22,58],[226,96,58]]];
  function L(a,b,t){return a.map(function(v,i){return Math.round(v+(b[i]-v)*t);});}function R(a){return 'rgb('+a[0]+','+a[1]+','+a[2]+')';}
  function setP(p){p=Math.max(0,Math.min(1,p));var top,bot,t;
   if(p<0.5){t=p/0.5;top=L(SK[0][0],SK[1][0],t);bot=L(SK[0][1],SK[1][1],t);}else{t=(p-0.5)/0.5;top=L(SK[1][0],SK[2][0],t);bot=L(SK[1][1],SK[2][1],t);}
   sky.style.background='linear-gradient(180deg,'+R(top)+' 0%,'+R(bot)+' 78%,'+R(bot)+' 100%)';
-  var arc=Math.sin(p*Math.PI),x=8+84*p,y=84-66*arc;sun.setAttribute('cx',x);sun.setAttribute('cy',y);glow.setAttribute('cx',x);glow.setAttribute('cy',y);
-  var sc=L([255,243,180],[255,150,60],1-arc);sun.setAttribute('fill',R(sc));glow.setAttribute('fill',R(sc));glow.setAttribute('opacity',(0.15+0.22*arc).toFixed(2));
+  var arc=Math.sin(p*Math.PI);sun.style.left=(7+85*p)+'%';sun.style.top=(46-36*arc)+'%';
+  sun.style.background=R(L([255,243,180],[255,150,60],1-arc));
   var w=Math.min(1,Math.max(0,(arc-0.32)/0.42));document.documentElement.style.setProperty('--htxt',R(L([255,255,255],[17,46,34],w)));
   land.setAttribute('transform','translate('+(50-100*p).toFixed(1)+',0)');
   var g=0.15+0.85*p;plants.forEach(function(pl,i){pl.style.transform='scaleY('+Math.min(1,g*(0.9+0.06*i))+')';});}
