@@ -8,7 +8,7 @@
 <style>
   :root{
     --canopy:#15352a; --leaf:#2d6a4f; --solar:#e9a23b; --solardeep:#c87f18;
-    --slate:#46627a; --bg:#eef4ef; --card:#ffffff; --ink:#1b2620; --line:#d9e2dc;
+    --slate:#46627a; --bg:#eef4ef; --card:#ffffff; --ink:#1b2620; --line:#d9e2dc; --htxt:#fff;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
@@ -17,7 +17,7 @@
   .wrap{max-width:920px;margin:0 auto;padding:0 18px}
 
   /* hero */
-  header{background:transparent;color:#fff;min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 0}
+  header{background:transparent;color:var(--htxt);text-shadow:0 1px 14px rgba(0,0,0,.18);min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 0}
   .gh{width:120px;height:104px;margin:0 auto 14px;display:block}
   header h1{font-size:1.55rem;font-weight:800;letter-spacing:.2px;line-height:1.25;
             max-width:640px;margin:0 auto}
@@ -47,9 +47,9 @@
   .card.gold .go{color:var(--solardeep)} .card.slate .go{color:var(--slate)}
 
   /* footer */
-  footer{margin-top:90px;border-top:1px solid var(--line);padding:22px 0 34px;background:rgba(238,244,239,.85);
-         font-size:.84rem;color:#5a665e;text-align:center}
-  footer b{color:var(--canopy)}
+  footer{margin-top:90px;border-top:none;padding:22px 0 40px;
+         font-size:.84rem;color:var(--htxt);text-shadow:0 1px 12px rgba(0,0,0,.22);text-align:center}
+  footer b{color:var(--htxt)}
   footer .aff{margin-top:6px;font-size:.78rem;opacity:.9}
 
   @media(max-width:680px){
@@ -93,21 +93,19 @@
   <defs><linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aa6d6"/><stop offset="1" stop-color="#286f9e"/></linearGradient></defs>
   <circle id="sunGlow" cx="50" cy="60" r="13" fill="#ffe49b" opacity="0.3"/>
   <circle id="sun" cx="50" cy="60" r="7.5" fill="#ffd24a"/>
-  <!-- Alpes (Savoie, gauche) -->
-  <polygon points="-16,92 10,44 38,92" fill="#a6bace" opacity="0.85"/>
-  <polygon points="2,92 26,36 50,92" fill="#83a0b9"/>
-  <polygon points="26,36 17,51 35,51" fill="#ffffff"/>
-  <polygon points="10,44 3,55 17,55" fill="#ffffff"/>
-  <!-- mer (Imperia, droite) -->
-  <rect x="64" y="85" width="36" height="15" fill="url(#seaG)"/>
-  <g stroke="#d6effb" stroke-width="0.7" stroke-linecap="round" opacity="0.6"><line x1="69" y1="90" x2="78" y2="90"/><line x1="84" y1="93" x2="95" y2="93"/><line x1="76" y1="96" x2="88" y2="96"/></g>
-  <!-- terre verte (gauche-centre) -->
-  <path d="M0,100 L0,80 Q32,74 64,86 L64,100 Z" fill="#7ba87c"/>
-  <path d="M0,100 L0,90 Q30,86 64,90 L64,100 Z" fill="#5b7d50"/>
-  <!-- plage (transition) -->
-  <path d="M60,84 Q65,86 67,92 L62,92 Q59,87 57,84 Z" fill="#e6cd93"/>
-  <!-- serre + plantes (centre) -->
-  <g transform="translate(38,73)">
+  <g id="land">
+   <rect x="80" y="84" width="86" height="20" fill="url(#seaG)"/>
+   <g stroke="#d6effb" stroke-width="0.7" stroke-linecap="round" opacity="0.6"><line x1="94" y1="90" x2="103" y2="90"/><line x1="114" y1="93" x2="125" y2="93"/><line x1="103" y1="96" x2="115" y2="96"/></g>
+   <path d="M-56,100 L-56,82 Q16,75 84,86 L84,100 Z" fill="#7ba87c"/>
+   <path d="M-56,100 L-56,90 Q16,86 84,90 L86,100 Z" fill="#5b7d50"/>
+   <polygon points="-58,88 -32,46 -6,88" fill="#9db2c8"/>
+   <polygon points="-34,88 -9,38 16,88" fill="#83a0b9"/>
+   <polygon points="-6,88 11,56 28,88" fill="#94abc1"/>
+   <polygon points="-32,46 -37,54 -27,54" fill="#ffffff"/>
+   <polygon points="-9,38 -15,47 -3,47" fill="#ffffff"/>
+   <polygon points="11,56 7,62 15,62" fill="#ffffff"/>
+   <path d="M78,84 Q84,86 87,92 L82,92 Q78,87 75,84 Z" fill="#e6cd93"/>
+   <g transform="translate(38,73)">
     <polygon points="0,18 0,9 12,2 24,9 24,18" fill="rgba(222,240,235,.42)" stroke="#eaf4ef" stroke-width="0.7"/>
     <polygon points="2.5,8 11,2.5 9.5,7 4,11.5" fill="#1b2742" stroke="#e9a23b" stroke-width="0.4"/>
     <polyline points="0,18 0,9 12,2 24,9 24,18" fill="none" stroke="#e3f1ea" stroke-width="0.9" stroke-linejoin="round"/>
@@ -115,8 +113,9 @@
     <g class="plant p1"><path d="M7,18 L7,12" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="5.2" cy="14" rx="1.5" ry="0.8" fill="#5fb15f" transform="rotate(-28 5.2 14)"/><ellipse cx="8.8" cy="12.6" rx="1.5" ry="0.8" fill="#5fb15f" transform="rotate(28 8.8 12.6)"/></g>
     <g class="plant p2"><path d="M12,18 L12,10.5" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="10" cy="13" rx="1.6" ry="0.9" fill="#6cc06c" transform="rotate(-26 10 13)"/><ellipse cx="14" cy="11.5" rx="1.6" ry="0.9" fill="#6cc06c" transform="rotate(26 14 11.5)"/></g>
     <g class="plant p3"><path d="M17,18 L17,12.5" stroke="#3f7a43" stroke-width="0.8" fill="none"/><ellipse cx="15.2" cy="14.5" rx="1.4" ry="0.7" fill="#5fb15f" transform="rotate(-28 15.2 14.5)"/><ellipse cx="18.8" cy="13" rx="1.4" ry="0.7" fill="#5fb15f" transform="rotate(28 18.8 13)"/></g>
+   </g>
   </g>
-</svg></div>
+ </svg></div>
 
 <header>
   <div class="wrap">
@@ -307,7 +306,7 @@
 </script>
 
 <script>
-(function(){var sky=document.getElementById('sky'),sun=document.getElementById('sun'),glow=document.getElementById('sunGlow'),plants=document.querySelectorAll('#scene .plant');
+(function(){var sky=document.getElementById('sky'),sun=document.getElementById('sun'),glow=document.getElementById('sunGlow'),land=document.getElementById('land'),plants=document.querySelectorAll('#scene .plant');
  var SK=[[[26,38,72],[233,150,70]],[[74,150,222],[201,230,246]],[[40,22,58],[226,96,58]]];
  function L(a,b,t){return a.map(function(v,i){return Math.round(v+(b[i]-v)*t);});}function R(a){return 'rgb('+a[0]+','+a[1]+','+a[2]+')';}
  function setP(p){p=Math.max(0,Math.min(1,p));var top,bot,t;
@@ -315,9 +314,12 @@
   sky.style.background='linear-gradient(180deg,'+R(top)+' 0%,'+R(bot)+' 78%,'+R(bot)+' 100%)';
   var arc=Math.sin(p*Math.PI),x=8+84*p,y=84-66*arc;sun.setAttribute('cx',x);sun.setAttribute('cy',y);glow.setAttribute('cx',x);glow.setAttribute('cy',y);
   var sc=L([255,243,180],[255,150,60],1-arc);sun.setAttribute('fill',R(sc));glow.setAttribute('fill',R(sc));glow.setAttribute('opacity',(0.15+0.22*arc).toFixed(2));
+  var w=Math.min(1,Math.max(0,(arc-0.32)/0.42));document.documentElement.style.setProperty('--htxt',R(L([255,255,255],[17,46,34],w)));
+  land.setAttribute('transform','translate('+(50-100*p).toFixed(1)+',0)');
   var g=0.15+0.85*p;plants.forEach(function(pl,i){pl.style.transform='scaleY('+Math.min(1,g*(0.9+0.06*i))+')';});}
  function onScroll(){var m=document.documentElement.scrollHeight-window.innerHeight;setP(m>0?window.scrollY/m:0);}
- window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);onScroll();
+ var qp=new URLSearchParams(location.search).get('p');
+ if(qp!==null){setP(parseFloat(qp));}else{window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);onScroll();}
 })();
 </script>
 </body>
