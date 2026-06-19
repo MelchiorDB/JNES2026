@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>3D cucumber growth &middot; Pao FSPM</title>
 <style>
   :root{--canopy:#15352a;--leaf:#2d6a4f;--solar:#e9a23b;--slate:#46627a}
@@ -65,6 +65,7 @@
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 }}
 </script>
+<script>window.addEventListener('error',function(ev){var d=document.getElementById('dayl'); if(d&&/three|module|import/i.test(''+ev.message)) d.textContent='3D error: '+ev.message;});</script>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -78,7 +79,7 @@ let cur=0, model=null, growT=0, curScale=1, target=1;
 const canvas=document.getElementById('c');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-const scene=new THREE.Scene();
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0xd8e9f1);
 const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,100);
 camera.position.set(3.4,2.4,4.4);
 
@@ -102,21 +103,22 @@ const loader=new OBJLoader();
 function loadStage(i){
   spin.classList.add('on');
   loader.load(STAGES[i].f, obj=>{
-    obj.traverse(c=>{ if(c.isMesh){ c.material=mat; } });
+    obj.traverse(c=>{ if(c.isMesh){ if(c.geometry&&!c.geometry.attributes.normal) c.geometry.computeVertexNormals(); c.material=mat; } });
     const box=new THREE.Box3().setFromObject(obj);
     const ctr=box.getCenter(new THREE.Vector3());
     const rawH=Math.max(0.01, box.max.y-box.min.y);
-    const targetH=0.7+1.7*i/(STAGES.length-1);
+    const targetH=1.0+1.8*i/(STAGES.length-1);
     const sc=targetH/rawH; curScale=sc; target=sc;
     obj.position.set(-ctr.x*sc, -box.min.y*sc, -ctr.z*sc);
     if(model) scene.remove(model);
     model=obj; scene.add(obj);
     obj.scale.setScalar(sc*0.82); growT=0;
-    controls.target.set(0, targetH*0.52, 0);
+    controls.target.set(0, targetH*0.5, 0);
+    const dist=Math.max(3.2,targetH*2.2); camera.position.set(dist*0.62,targetH*0.7+0.6,dist*0.8); controls.update();
     document.getElementById('dayl').textContent='Day '+STAGES[i].day;
     document.getElementById('prog').style.width=(100*i/(STAGES.length-1))+'%';
     spin.classList.remove('on');
-  }, undefined, ()=>spin.classList.remove('on'));
+  }, undefined, e=>{ spin.classList.remove('on'); document.getElementById('dayl').textContent='load error'; console.error('OBJ load failed',e); });
 }
 
 function grow(){
