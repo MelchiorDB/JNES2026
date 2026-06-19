@@ -30,7 +30,7 @@
 
   /* cards */
   main{padding:26px 0 10px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:16px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
         padding:22px 20px;display:flex;flex-direction:column;min-height:200px;
         transition:transform .15s ease,box-shadow .15s ease}
@@ -40,6 +40,8 @@
   .ic.green{background:#e7f1ea;color:var(--leaf)}
   .ic.gold{background:#fdf2dd;color:var(--solardeep)}
   .ic.slate{background:#e9eef3;color:var(--slate)}
+  .ic.li{background:#e7eef6;color:#0a66c2;font-weight:800;font-size:1.25rem}
+  .card.li .go{color:#0a66c2}
   .card h2{font-size:1.12rem;color:var(--canopy);margin-bottom:6px}
   .card p{font-size:.92rem;color:#42514a;flex:1}
   .go{margin-top:14px;font-weight:700;font-size:.9rem;color:var(--leaf);display:inline-flex;align-items:center;gap:6px}
@@ -107,6 +109,13 @@
       <span class="go">See the bibliography &rarr;</span>
     </a>
 
+    <a class="card li" href="https://www.linkedin.com/in/melchior-duchaufour-35b31b179/" target="_blank" rel="noopener">
+      <div class="ic li">in</div>
+      <h2>LinkedIn</h2>
+      <p>Connect with the author and follow the agrivoltaic greenhouse PhD.</p>
+      <span class="go">Connect &rarr;</span>
+    </a>
+
   </div>
 </main>
 
@@ -114,6 +123,52 @@
   <b>Melchior Duchaufour</b> &nbsp;&middot;&nbsp; Christophe M&eacute;n&eacute;zo, Laurent Tabourot, Marco Fossa, Samuele Memme
   <div class="aff">Universit&eacute; Savoie Mont Blanc (LOCIE, SYMME), France &nbsp;&bull;&nbsp; University of Genova (DIME), Italy</div>
 </footer>
+
+
+<!-- greenhouse transition -->
+<style>
+#ght{position:fixed;inset:0;z-index:3000;background:linear-gradient(160deg,#15352a,#2d6a4f);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+ opacity:0;visibility:hidden;transition:opacity .3s}
+#ght.show{opacity:1;visibility:visible}
+#ght svg{width:132px;height:132px}
+.ght-house,.ght-floor{stroke:#cfe8d6;stroke-width:3;fill:none;opacity:.6;stroke-linecap:round;stroke-linejoin:round}
+.ght-stem{stroke:#bfe3c8;stroke-width:4;fill:none;stroke-linecap:round;stroke-dasharray:42;stroke-dashoffset:42}
+.ght-leaf{fill:#7ec98f;transform-origin:60px 96px;transform:scale(0)}
+.ght-rays{transform-origin:92px 28px}
+#ght.show .ght-stem{animation:ghtgrow .7s ease forwards}
+#ght.show .ght-l1{animation:ghtleaf .4s ease .32s forwards}
+#ght.show .ght-l2{animation:ghtleaf .4s ease .52s forwards}
+#ght.show .ght-rays{animation:ghtspin 5s linear infinite}
+.ght-lab{color:#cfe8d6;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+@keyframes ghtgrow{to{stroke-dashoffset:0}}
+@keyframes ghtleaf{to{transform:scale(1)}}
+@keyframes ghtspin{to{transform:rotate(360deg)}}
+</style>
+<div id="ght" aria-hidden="true"><svg viewBox="0 0 120 120">
+ <circle cx="92" cy="28" r="8.5" fill="#e9a23b"/>
+ <g class="ght-rays" stroke="#e9a23b" stroke-width="2.4" stroke-linecap="round">
+  <line x1="92" y1="9" x2="92" y2="15"/><line x1="92" y1="41" x2="92" y2="47"/>
+  <line x1="73" y1="28" x2="79" y2="28"/><line x1="105" y1="28" x2="111" y2="28"/>
+  <line x1="79" y1="15" x2="83" y2="19"/><line x1="101" y1="37" x2="105" y2="41"/>
+  <line x1="105" y1="15" x2="101" y2="19"/><line x1="83" y1="37" x2="79" y2="41"/></g>
+ <polyline class="ght-house" points="26,96 26,62 60,40 94,62 94,96"/>
+ <line class="ght-floor" x1="22" y1="96" x2="98" y2="96"/>
+ <path class="ght-stem" d="M60,96 L60,60"/>
+ <ellipse class="ght-leaf ght-l1" cx="50" cy="78" rx="9" ry="5" transform="rotate(-25 50 78)"/>
+ <ellipse class="ght-leaf ght-l2" cx="70" cy="66" rx="9" ry="5" transform="rotate(25 70 66)"/>
+</svg><div class="ght-lab">growing&hellip;</div></div>
+<script>
+(function(){var o=document.getElementById('ght');
+ window.addEventListener('pageshow',function(){o.classList.remove('show');});
+ document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a');if(!a)return;
+  var h=a.getAttribute('href')||'';
+  if(a.target==='_blank'||h.charAt(0)==='#'||/^(https?:|mailto:|tel:)/.test(h))return;
+  if(!/\.html(\?|#|$)/.test(h))return;
+  e.preventDefault();o.classList.add('show');setTimeout(function(){location.href=h;},700);});
+})();
+</script>
 
 </body>
 </html>

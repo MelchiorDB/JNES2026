@@ -136,9 +136,9 @@
        greenhouse and its environment, solved every 15&nbsp;min.</figcaption></figure>
     <details><summary>The coupling, in detail <span></span></summary>
       <div class="dc"><ul>
-        <li><b>Greenhouse balance</b> — a 14-state ODE (air, cover, floor, walls, soil) integrated with Tsit5
+        <li><b>Greenhouse balance</b>: a 14-state ODE (air, cover, floor, walls, soil) integrated with Tsit5
           (Runge-Kutta) at 15-min steps.</li>
-        <li><b>PlantBiophysics.jl</b> — for each leaf, the coupled energy balance (Monteith), photosynthesis
+        <li><b>PlantBiophysics.jl</b>: for each leaf, the coupled energy balance (Monteith), photosynthesis
           (Farquhar) and stomatal conductance (Medlyn), returning transpiration and net assimilation A<sub>n</sub>.</li>
         <li>Per-leaf radiation cross-validated against the <b>ArchimedLight</b> ray tracer (within 2%).</li>
       </ul></div>
@@ -148,7 +148,7 @@
   <section id="layouts">
     <h2><span class="tag">Setup</span> Four PV layouts</h2>
     <p class="body">The same cucumber canopy is run under four roof layouts at equal 25% coverage: no PV, five
-       strips, a single continuous band and a checkerboard &mdash; shown here at progressive growth stages.</p>
+       strips, a single continuous band and a checkerboard, shown here at progressive growth stages.</p>
     <figure><img src="img/layouts.png" alt="Four PV roof layouts"><span class="zoomhint">tap to zoom</span>
       <figcaption><b>Figure 3.</b> The four PV roof layouts over the cucumber crop at progressive growth stages
        (day 20 to 59); the last three at 25% roof coverage.</figcaption></figure>
@@ -159,9 +159,9 @@
     <figure><img src="img/perleaf.png" alt="Per-leaf light on one plant"><span class="zoomhint">tap to zoom</span>
       <figcaption><b>Figure 4.</b> One plant under the PV band. Left: leaves colored by daily absorbed light; the DLI
        spans ~2.5&times; within one plant, driven by leaf orientation. Right: its instantaneous PAR under the four
-       layouts &mdash; the band keeps it shaded all day, strips and checkerboard sweep it in and out.</figcaption></figure>
+       layouts. The band keeps it shaded all day, strips and checkerboard sweep it in and out.</figcaption></figure>
     <div class="key">Within a single plant the daily light varies ~2.5&times;, set by leaf <b>orientation</b> rather
-       than height &mdash; exactly the heterogeneity a 1D model averages out.</div>
+       than height. This is exactly the heterogeneity a 1D model averages out.</div>
   </section>
 
   <section id="r2">
@@ -195,12 +195,12 @@
       <figcaption><b>Figure 6.</b> Opaque panels push leaves onto the steep part of the light response (large loss);
        semi/transparent panels keep them near the saturated plateau (small loss).</figcaption></figure>
     <div class="key">Semi-transparent (&tau;=0.40) and transparent (&tau;=0.65) panels <b>drastically reduce the
-       growth penalty</b> &mdash; roughly half, then a quarter of the opaque cost &mdash; because photosynthesis
+       growth penalty</b> (roughly half, then a quarter of the opaque cost) because photosynthesis
        <b>saturates with light</b>.</div>
     <details><summary>Why transparency works &amp; the energy trade-off <span></span></summary>
       <div class="dc">
         <p>A sunlit leaf cut from 1200 to 480 &micro;mol (semi-transparent) keeps <b>77%</b> of its photosynthesis
-          despite losing 60% of the light &mdash; the saturation buffer. So the yield cost is highly sub-linear.</p>
+          despite losing 60% of the light: the saturation buffer. So the yield cost is highly sub-linear.</p>
         <p>But transparency is a trade-off with electricity:</p>
         <ul>
           <li><b>Opaque</b> (&eta;~19%): ~43 kWh/day, &minus;24% yield (band).</li>
@@ -235,7 +235,7 @@
 <footer>
   <b>Melchior Duchaufour</b> &middot; Christophe Ménézo, Laurent Tabourot, Marco Fossa, Samuele Memme<br>
   Université Savoie Mont Blanc (LOCIE, SYMME), France &bull; University of Genova (DIME), Italy<br>
-  <span style="opacity:.7">JNES 2026 &mdash; tap any figure to enlarge</span>
+  <span style="opacity:.7">JNES 2026 &middot; tap any figure to enlarge</span>
 </footer>
 
 <div id="lb" onclick="this.classList.remove('on')"><span class="x">&times;</span><img id="lbimg" src="" alt=""></div>
@@ -248,5 +248,51 @@
     document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on');});
   })();
 </script>
+
+<!-- greenhouse transition -->
+<style>
+#ght{position:fixed;inset:0;z-index:3000;background:linear-gradient(160deg,#15352a,#2d6a4f);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+ opacity:0;visibility:hidden;transition:opacity .3s}
+#ght.show{opacity:1;visibility:visible}
+#ght svg{width:132px;height:132px}
+.ght-house,.ght-floor{stroke:#cfe8d6;stroke-width:3;fill:none;opacity:.6;stroke-linecap:round;stroke-linejoin:round}
+.ght-stem{stroke:#bfe3c8;stroke-width:4;fill:none;stroke-linecap:round;stroke-dasharray:42;stroke-dashoffset:42}
+.ght-leaf{fill:#7ec98f;transform-origin:60px 96px;transform:scale(0)}
+.ght-rays{transform-origin:92px 28px}
+#ght.show .ght-stem{animation:ghtgrow .7s ease forwards}
+#ght.show .ght-l1{animation:ghtleaf .4s ease .32s forwards}
+#ght.show .ght-l2{animation:ghtleaf .4s ease .52s forwards}
+#ght.show .ght-rays{animation:ghtspin 5s linear infinite}
+.ght-lab{color:#cfe8d6;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+@keyframes ghtgrow{to{stroke-dashoffset:0}}
+@keyframes ghtleaf{to{transform:scale(1)}}
+@keyframes ghtspin{to{transform:rotate(360deg)}}
+</style>
+<div id="ght" aria-hidden="true"><svg viewBox="0 0 120 120">
+ <circle cx="92" cy="28" r="8.5" fill="#e9a23b"/>
+ <g class="ght-rays" stroke="#e9a23b" stroke-width="2.4" stroke-linecap="round">
+  <line x1="92" y1="9" x2="92" y2="15"/><line x1="92" y1="41" x2="92" y2="47"/>
+  <line x1="73" y1="28" x2="79" y2="28"/><line x1="105" y1="28" x2="111" y2="28"/>
+  <line x1="79" y1="15" x2="83" y2="19"/><line x1="101" y1="37" x2="105" y2="41"/>
+  <line x1="105" y1="15" x2="101" y2="19"/><line x1="83" y1="37" x2="79" y2="41"/></g>
+ <polyline class="ght-house" points="26,96 26,62 60,40 94,62 94,96"/>
+ <line class="ght-floor" x1="22" y1="96" x2="98" y2="96"/>
+ <path class="ght-stem" d="M60,96 L60,60"/>
+ <ellipse class="ght-leaf ght-l1" cx="50" cy="78" rx="9" ry="5" transform="rotate(-25 50 78)"/>
+ <ellipse class="ght-leaf ght-l2" cx="70" cy="66" rx="9" ry="5" transform="rotate(25 70 66)"/>
+</svg><div class="ght-lab">growing&hellip;</div></div>
+<script>
+(function(){var o=document.getElementById('ght');
+ window.addEventListener('pageshow',function(){o.classList.remove('show');});
+ document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a');if(!a)return;
+  var h=a.getAttribute('href')||'';
+  if(a.target==='_blank'||h.charAt(0)==='#'||/^(https?:|mailto:|tel:)/.test(h))return;
+  if(!/\.html(\?|#|$)/.test(h))return;
+  e.preventDefault();o.classList.add('show');setTimeout(function(){location.href=h;},700);});
+})();
+</script>
+
 </body>
 </html>
