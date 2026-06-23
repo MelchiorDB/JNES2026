@@ -78,6 +78,22 @@
   .cta{display:inline-block;margin:8px 6px;background:var(--canopy);color:#fff;text-decoration:none;
        padding:11px 20px;border-radius:999px;font-weight:700;font-size:.9rem}
   @media(max-width:560px){header h1{font-size:1.3rem}body{font-size:16px}}
+
+  /* clickable system diagram (original image + transparent hotspots) */
+  .sysfig{position:relative}
+  .sysd{position:relative;display:block;line-height:0}
+  .sysimg{width:100%;height:auto;border-radius:8px;display:block;cursor:zoom-in}
+  .sd-hot{position:absolute;border:0;background:transparent;border-radius:12px;cursor:pointer;padding:0;
+          font-family:inherit;transition:background .12s,box-shadow .12s;-webkit-tap-highlight-color:transparent}
+  .sd-hot:hover,.sd-hot:focus-visible{background:rgba(233,162,59,.15);box-shadow:0 0 0 2.5px var(--solar);outline:none}
+  .sd-hot.active{background:rgba(233,162,59,.22);box-shadow:0 0 0 3px var(--solardeep)}
+  .sd-panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;
+            text-align:left;color:#3c4a42;box-shadow:0 4px 16px rgba(21,53,42,.06)}
+  .sd-panel h4{color:var(--canopy);font-size:1.08rem;margin-bottom:6px}
+  .sd-panel .eqs{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+  .sd-panel .eq{background:#f3f8f4;border-left:3px solid var(--leaf);border-radius:6px;padding:8px 12px;
+                font-size:.92rem;color:var(--canopy);overflow-x:auto}
+  .sd-panel .src{margin-top:10px;font-size:.78rem;color:var(--slate)}
 </style>
 </head>
 <body>
@@ -98,7 +114,7 @@
   <a href="#layouts">Layouts</a>
   <a href="#r1">Per-leaf light</a>
   <a href="#r2">Yield &amp; water</a>
-  <a href="#r3">Transparency</a>
+  <a href="#r3">Semi-transparent PV</a>
   <a href="#persp">Perspective</a>
 </div></nav>
 
@@ -131,18 +147,21 @@
     <p class="body">These per-leaf fluxes drive a coupled balance, exchanged every 15&nbsp;min between a greenhouse
        <b>energy &amp; water ODE</b> and <b>PlantBiophysics</b> (per-leaf energy balance, photosynthesis, stomatal
        conductance).</p>
-    <figure><img src="img/coupling.png" alt="Coupled model diagram"><span class="zoomhint">tap to zoom</span>
-      <figcaption><b>Figure 2.</b> Functional diagram of the coupled differential-equation system describing the
-       greenhouse and its environment, solved every 15&nbsp;min.</figcaption></figure>
-    <details><summary>The coupling, in detail <span></span></summary>
-      <div class="dc"><ul>
-        <li><b>Greenhouse balance</b>: a 14-state ODE (air, cover, floor, walls, soil) integrated with Tsit5
-          (Runge-Kutta) at 15-min steps.</li>
-        <li><b>PlantBiophysics.jl</b>: for each leaf, the coupled energy balance (Monteith), photosynthesis
-          (Farquhar) and stomatal conductance (Medlyn), returning transpiration and net assimilation A<sub>n</sub>.</li>
-        <li>Per-leaf radiation cross-validated against the <b>ArchimedLight</b> ray tracer (within 2%).</li>
-      </ul></div>
-    </details>
+    <figure class="sysfig">
+      <div class="sysd" id="sysd">
+        <img class="sysimg" src="img/coupling.png" alt="The coupled system: weather and PV layout feed a Monte Carlo ray tracer; a greenhouse energy and water ODE then exchanges with PlantBiophysics every 15 min, producing indoor microclimate, crop performance and PV electricity.">
+        <button class="sd-hot" data-k="weather" style="left:4.2%;top:2.8%;width:22.8%;height:11.7%"  aria-label="Weather (TMY) inputs"></button>
+        <button class="sd-hot" data-k="pv"      style="left:72.6%;top:2.8%;width:23.4%;height:11.7%" aria-label="PV layout and stage"></button>
+        <button class="sd-hot" data-k="mc"      style="left:38%;top:16.8%;width:24%;height:11.6%"    aria-label="Monte Carlo ray tracing"></button>
+        <button class="sd-hot" data-k="gh"      style="left:4.8%;top:36.2%;width:35.4%;height:32%"   aria-label="Greenhouse energy and water balance"></button>
+        <button class="sd-hot" data-k="crop"    style="left:58.8%;top:36.2%;width:36.4%;height:32%"  aria-label="Crop energy and water balance"></button>
+        <button class="sd-hot" data-k="micro"   style="left:4.8%;top:75.8%;width:25.4%;height:17.6%" aria-label="Indoor microclimate output"></button>
+        <button class="sd-hot" data-k="perf"    style="left:36.8%;top:75.8%;width:26.3%;height:17.6%" aria-label="Crop performance output"></button>
+        <button class="sd-hot" data-k="elec"    style="left:70.4%;top:75.8%;width:25.4%;height:17.6%" aria-label="PV electricity output"></button>
+      </div>
+      <figcaption><b>Figure 2.</b> The coupled system, solved every 15&nbsp;min. <b>Tap any box</b> to reveal its model and equations; tap elsewhere to enlarge.</figcaption>
+    </figure>
+    <div class="sd-panel" id="sdpanel"><em>&#9757; Tap a box in the diagram to explore the models and equations behind it.</em></div>
   </section>
 
   <section id="layouts">
@@ -169,11 +188,6 @@
     <figure><img src="img/matrix.png" alt="Yield and water by layout"><span class="zoomhint">tap to zoom</span>
       <figcaption><b>Figure 5.</b> At equal 25% coverage: the checkerboard costs the least yield (left); the PV also
        cuts total irrigation water 10 to 18% (right).</figcaption></figure>
-    <div class="nums">
-      <div class="num"><b>&minus;11%</b><span>checkerboard yield (Genova)</span></div>
-      <div class="num"><b>&minus;24%</b><span>continuous band (Almería)</span></div>
-      <div class="num"><b>&minus;10&ndash;18%</b><span>irrigation water saved</span></div>
-    </div>
     <div class="key">At equal coverage, the <b>checkerboard is best</b> and the <b>continuous band worst</b>:
        spreading the shade in two dimensions keeps the light uniform, so no plant is starved while others sit
        light-saturated. This matches the photovoltaic-greenhouse literature (Cossu et al. [3]).</div>
@@ -190,7 +204,7 @@
   </section>
 
   <section id="r3">
-    <h2><span class="tag">Result 3</span> Transparency is the real lever</h2>
+    <h2><span class="tag">Result 3</span> Introducing semi-transparent PV panels</h2>
     <figure><img src="img/transparency.png" alt="Transparency and the saturation curve"><span class="zoomhint">tap to zoom</span>
       <figcaption><b>Figure 6.</b> Opaque panels push leaves onto the steep part of the light response (large loss);
        semi/transparent panels keep them near the saturated plateau (small loss).</figcaption></figure>
@@ -228,6 +242,7 @@
   <section style="text-align:center">
     <a class="cta" href="references.html">See the references</a>
     <a class="cta" href="index.html" style="background:var(--leaf)">Project &amp; links</a>
+    <a class="cta" href="mailto:melchior.duchaufour-ballard@univ-smb.fr" style="background:var(--solardeep)">Contact me</a>
   </section>
 
 </main>
@@ -235,6 +250,7 @@
 <footer>
   <b>Melchior Duchaufour</b> &middot; Christophe Ménézo, Laurent Tabourot, Marco Fossa, Samuele Memme<br>
   Université Savoie Mont Blanc (LOCIE, SYMME), France &bull; University of Genova (DIME), Italy<br>
+  <a href="mailto:melchior.duchaufour-ballard@univ-smb.fr">melchior.duchaufour-ballard@univ-smb.fr</a><br>
   <span style="opacity:.7">JNES 2026 &middot; tap any figure to enlarge</span>
 </footer>
 
@@ -268,6 +284,22 @@
 @keyframes ghtgrow{to{stroke-dashoffset:0}}
 @keyframes ghtleaf{to{transform:scale(1)}}
 @keyframes ghtspin{to{transform:rotate(360deg)}}
+
+  /* clickable system diagram (original image + transparent hotspots) */
+  .sysfig{position:relative}
+  .sysd{position:relative;display:block;line-height:0}
+  .sysimg{width:100%;height:auto;border-radius:8px;display:block;cursor:zoom-in}
+  .sd-hot{position:absolute;border:0;background:transparent;border-radius:12px;cursor:pointer;padding:0;
+          font-family:inherit;transition:background .12s,box-shadow .12s;-webkit-tap-highlight-color:transparent}
+  .sd-hot:hover,.sd-hot:focus-visible{background:rgba(233,162,59,.15);box-shadow:0 0 0 2.5px var(--solar);outline:none}
+  .sd-hot.active{background:rgba(233,162,59,.22);box-shadow:0 0 0 3px var(--solardeep)}
+  .sd-panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;
+            text-align:left;color:#3c4a42;box-shadow:0 4px 16px rgba(21,53,42,.06)}
+  .sd-panel h4{color:var(--canopy);font-size:1.08rem;margin-bottom:6px}
+  .sd-panel .eqs{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+  .sd-panel .eq{background:#f3f8f4;border-left:3px solid var(--leaf);border-radius:6px;padding:8px 12px;
+                font-size:.92rem;color:var(--canopy);overflow-x:auto}
+  .sd-panel .src{margin-top:10px;font-size:.78rem;color:var(--slate)}
 </style>
 <div id="ght" aria-hidden="true"><svg viewBox="0 0 120 120">
  <circle cx="92" cy="28" r="8.5" fill="#e9a23b"/>
@@ -294,5 +326,39 @@
 })();
 </script>
 
+<script>
+(function(){
+ var SD={
+  weather:{t:'Weather (TMY)',h:'Per-site hourly <b>Typical Meteorological Year</b>, interpolated to 15-min steps. Provides the boundary conditions: outside air temperature, global irradiance, wind speed and relative humidity.',
+    eq:['global irradiance split into <b>direct + diffuse</b> via the Reindl correlation'],src:'Reindl, Beckman &amp; Duffie (1990) [5]'},
+  pv:{t:'PV layout &amp; stage',h:'The roof PV configuration and the crop growth stage drive the geometry fed to the ray tracer.',
+    eq:['panel optical type sets transmittance &tau;: <b>opaque &tau;=0</b>, <b>semi &tau;=0.40</b>, <b>transparent &tau;=0.65</b>','geometry: 5 strips / single band / checkerboard, all at <b>25% roof coverage</b>','stage = growth day (9 to 59)']},
+  mc:{t:'Monte Carlo ray tracing',h:'Backward Monte Carlo, ray-traced <b>per leaf</b>. Two passes, with multiple scattering between leaves (leaf reflectance/transmittance).',
+    eq:['<b>diffuse</b>: sample the sky hemisphere with many rays','<b>direct</b>: one shadow ray toward the sun, occlusion test','&Phi;<sub>abs</sub> = &int;<sub>2&pi;</sub> L(&omega;)&middot;max(0, <b>n</b>&middot;&omega;) d&omega;','sunlit fraction = N<sub>reach&nbsp;sky</sub> / N<sub>rays</sub>'],src:'validated vs ArchimedLight within 2% (Caribu, Helios)'},
+  gh:{t:'Greenhouse energy &amp; water balance',h:'A <b>14-state ODE</b> (air, cover, floor, the 4 walls and soil layers), integrated with <b>Tsit5</b> (Runge-Kutta) at 15-min steps.',
+    eq:['per node: C<sub>i</sub> dT<sub>i</sub>/dt = Q<sub>solar</sub> + Q<sub>LW</sub> + Q<sub>conv</sub> + Q<sub>latent</sub> + Q<sub>vent</sub>','long-wave: radiosity J<sub>i</sub> = &epsilon;&sigma;T<sub>i</sub><sup>4</sup> + (1&minus;&epsilon;)&Sigma;F<sub>ij</sub>J<sub>j</sub>','ventilation (stack + wind): q = C<sub>d</sub>A&radic;(2g&middot;&Delta;T&middot;h/T + (C<sub>w</sub>u)<sup>2</sup>)','latent: cover condensation + soil evaporation (Baille 1994)','vapour mass: dW/dt = Tr + E<sub>soil</sub> &minus; vent &minus; condensation']},
+  crop:{t:'Crop energy &amp; water balance &mdash; PlantBiophysics.jl',h:'Solved <b>for each leaf</b> as three coupled sub-models, returning per-leaf transpiration, net assimilation A<sub>n</sub> and leaf temperature.',
+    eq:['energy (Monteith): R<sub>n</sub> = H + &lambda;E &rarr; T<sub>leaf</sub>','photosynthesis (Farquhar FvCB): A<sub>n</sub> = min(A<sub>c</sub>, A<sub>j</sub>) &minus; R<sub>d</sub>','A<sub>c</sub> = V<sub>cmax</sub>(C<sub>i</sub>&minus;&Gamma;*)/(C<sub>i</sub>+K<sub>c</sub>(1+O/K<sub>o</sub>))','stomata (Medlyn): g<sub>s</sub> = g<sub>0</sub> + 1.6(1 + g<sub>1</sub>/&radic;D)&middot;A<sub>n</sub>/C<sub>s</sub> <span style="color:#5a665e">(a dynamic variant, Vialet-Chabrand, is also available, not required here)</span>'],src:'cucumber params (Pao 2021 [1]): V<sub>cmax</sub>&asymp;110, J<sub>max</sub>&asymp;180, R<sub>d</sub>&asymp;0.8, g<sub>1</sub>=5.5'},
+  micro:{t:'Indoor microclimate (output)',h:'The greenhouse climate returned by the ODE: indoor air temperature, humidity and cover condensation. It feeds back as the crop boundary condition every 15 min.'},
+  perf:{t:'Crop performance (output)',h:'The crop outputs accumulated over the 50-day growth:',
+    eq:['net assimilation A<sub>n</sub> (carbon &rarr; yield proxy)','transpiration (water &rarr; irrigation demand)']},
+  elec:{t:'PV electricity (output)',h:'Electrical output of the roof panels:',
+    eq:['P = G<sub>panel</sub> &middot; &eta; &middot; A','&eta; &asymp; 19% (opaque), 10% (semi), 6% (transparent)']}
+ };
+ var panel=document.getElementById('sdpanel');
+ document.querySelectorAll('#sysd .sd-hot').forEach(function(b){
+   b.addEventListener('click',function(){
+     document.querySelectorAll('#sysd .sd-hot').forEach(function(x){x.classList.remove('active');});
+     b.classList.add('active');
+     var d=SD[b.getAttribute('data-k')];
+     var html='<h4>'+d.t+'</h4><p>'+d.h+'</p>';
+     if(d.eq){ html+='<div class="eqs">'; d.eq.forEach(function(e){ html+='<div class="eq">'+e+'</div>'; }); html+='</div>'; }
+     if(d.src){ html+='<div class="src">'+d.src+'</div>'; }
+     panel.innerHTML=html;
+     panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+   });
+ });
+})();
+</script>
 </body>
 </html>
